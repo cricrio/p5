@@ -5,6 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 export function getStaticPaths() {
   return data.map((i) => ({ params: { id: i.name } }));
 }
+const siteUrl = import.meta.env.SITE_URL;
 
 const { id } = Astro.params;
 ---
@@ -16,8 +17,9 @@ const { id } = Astro.params;
       {id}
     </h1>
 
-    <iframe src=`./${id}/fullscreen` class='w-full aspect-video'
-      >Loading sketch ...</iframe
+    <iframe
+      src=`${siteUrl}/sketches/${id}/fullscreen`
+      class='w-full aspect-video'>Loading sketch ...</iframe
     >
   </section>
 </Layout>
