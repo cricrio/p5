@@ -1,0 +1,23 @@
+---
+import data from '../../../../data.json';
+import Layout from '../../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  return data.map((i) => ({ params: { id: i.name } }));
+}
+
+const { id } = Astro.params;
+---
+
+<Layout title={id}>
+  <section class='md:w-9/12 w-full m-auto'>
+    <h1 class='font-bold'>
+      <a href='/'>Sketches {'> '}</a>
+      {id}
+    </h1>
+
+    <iframe src=`./${id}/fullscreen` class='w-full aspect-video'
+      >Loading sketch ...</iframe
+    >
+  </section>
+</Layout>

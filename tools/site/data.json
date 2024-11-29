@@ -1,0 +1,86 @@
+[
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/001-complementary-color/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/001-complementary-color.mp4",
+      "publicUrl": "videos/001-complementary-color.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/001-complementary-color/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/001-complementary-color.js"
+    },
+    "name": "001-complementary-color"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/002-playing-with-sin-cos/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/002-playing-with-sin-cos.mp4",
+      "publicUrl": "videos/002-playing-with-sin-cos.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/002-playing-with-sin-cos/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/002-playing-with-sin-cos.js"
+    },
+    "name": "002-playing-with-sin-cos"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/003-playing-with-sin-cos-1/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/003-playing-with-sin-cos-1.mp4",
+      "publicUrl": "videos/003-playing-with-sin-cos-1.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/003-playing-with-sin-cos-1/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/003-playing-with-sin-cos-1.js"
+    },
+    "name": "003-playing-with-sin-cos-1"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/004-dots/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/004-dots.mp4",
+      "publicUrl": "videos/004-dots.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/004-dots/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/004-dots.js"
+    },
+    "name": "004-dots"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/005-rings/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/005-rings.mp4",
+      "publicUrl": "videos/005-rings.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/005-rings/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/005-rings.js"
+    },
+    "name": "005-rings"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/006-infinite-translate/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/006-infinite-translate.mp4",
+      "publicUrl": "videos/006-infinite-translate.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/006-infinite-translate/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/006-infinite-translate.js"
+    },
+    "name": "006-infinite-translate"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/007-slider/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/007-slider.mp4",
+      "publicUrl": "videos/007-slider.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/007-slider/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/007-slider.js"
+    },
+    "name": "007-slider"
+  }
+]
