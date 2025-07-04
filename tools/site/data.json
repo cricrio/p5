@@ -25,62 +25,74 @@
   },
   {
     "video": {
-      "source": "/Users/christopher/DEV/p5/sketches/003-playing-with-sin-cos-1/record.mp4",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/003-playing-with-sin-cos-1.mp4",
-      "publicUrl": "videos/003-playing-with-sin-cos-1.mp4"
+      "source": "/Users/christopher/DEV/p5/sketches/003-dots/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/003-dots.mp4",
+      "publicUrl": "videos/003-dots.mp4"
     },
     "script": {
-      "source": "/Users/christopher/DEV/p5/sketches/003-playing-with-sin-cos-1/sketch.js",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/003-playing-with-sin-cos-1.js"
+      "source": "/Users/christopher/DEV/p5/sketches/003-dots/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/003-dots.js"
     },
-    "name": "003-playing-with-sin-cos-1"
+    "name": "003-dots"
   },
   {
     "video": {
-      "source": "/Users/christopher/DEV/p5/sketches/004-dots/record.mp4",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/004-dots.mp4",
-      "publicUrl": "videos/004-dots.mp4"
+      "source": "/Users/christopher/DEV/p5/sketches/004-rings/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/004-rings.mp4",
+      "publicUrl": "videos/004-rings.mp4"
     },
     "script": {
-      "source": "/Users/christopher/DEV/p5/sketches/004-dots/sketch.js",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/004-dots.js"
+      "source": "/Users/christopher/DEV/p5/sketches/004-rings/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/004-rings.js"
     },
-    "name": "004-dots"
+    "name": "004-rings"
   },
   {
     "video": {
-      "source": "/Users/christopher/DEV/p5/sketches/005-rings/record.mp4",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/005-rings.mp4",
-      "publicUrl": "videos/005-rings.mp4"
+      "source": "/Users/christopher/DEV/p5/sketches/005-infinite-translate/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/005-infinite-translate.mp4",
+      "publicUrl": "videos/005-infinite-translate.mp4"
     },
     "script": {
-      "source": "/Users/christopher/DEV/p5/sketches/005-rings/sketch.js",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/005-rings.js"
+      "source": "/Users/christopher/DEV/p5/sketches/005-infinite-translate/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/005-infinite-translate.js"
     },
-    "name": "005-rings"
+    "name": "005-infinite-translate"
   },
   {
     "video": {
-      "source": "/Users/christopher/DEV/p5/sketches/006-infinite-translate/record.mp4",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/006-infinite-translate.mp4",
-      "publicUrl": "videos/006-infinite-translate.mp4"
+      "source": "/Users/christopher/DEV/p5/sketches/006-slider/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/006-slider.mp4",
+      "publicUrl": "videos/006-slider.mp4"
     },
     "script": {
-      "source": "/Users/christopher/DEV/p5/sketches/006-infinite-translate/sketch.js",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/006-infinite-translate.js"
+      "source": "/Users/christopher/DEV/p5/sketches/006-slider/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/006-slider.js"
     },
-    "name": "006-infinite-translate"
+    "name": "006-slider"
   },
   {
     "video": {
-      "source": "/Users/christopher/DEV/p5/sketches/007-slider/record.mp4",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/007-slider.mp4",
-      "publicUrl": "videos/007-slider.mp4"
+      "source": "/Users/christopher/DEV/p5/sketches/007-damier-simple/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/007-damier-simple.mp4",
+      "publicUrl": "videos/007-damier-simple.mp4"
     },
     "script": {
-      "source": "/Users/christopher/DEV/p5/sketches/007-slider/sketch.js",
-      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/007-slider.js"
+      "source": "/Users/christopher/DEV/p5/sketches/007-damier-simple/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/007-damier-simple.js"
     },
-    "name": "007-slider"
+    "name": "007-damier-simple"
+  },
+  {
+    "video": {
+      "source": "/Users/christopher/DEV/p5/sketches/008-color-degrade/record.mp4",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/videos/008-color-degrade.mp4",
+      "publicUrl": "videos/008-color-degrade.mp4"
+    },
+    "script": {
+      "source": "/Users/christopher/DEV/p5/sketches/008-color-degrade/sketch.js",
+      "destination": "/Users/christopher/DEV/p5/tools/site/public/sketches/008-color-degrade.js"
+    },
+    "name": "008-color-degrade"
   }
 ]

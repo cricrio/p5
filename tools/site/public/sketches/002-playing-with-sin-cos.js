@@ -35,6 +35,7 @@ function twin(position, angle) {
     dotRadius
   );
 }
+
 function draw() {
   background(239, 234, 90);
 
