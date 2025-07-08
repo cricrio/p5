@@ -1,30 +1,29 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from '@layouts/Layout.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { CodeFrame } from '@components/CodeFrame';
 
-import data from '../../data.json';
+const data = await getCollection('sketches');
 ---
 
 <Layout title='Welcome to Astro.'>
   <main>
     <section>
       <h2 class='font-medium'>Sketches</h2>
-      <ul class='grid grid-cols-2 gap-8'>
+      <div class='grid grid-cols-2 gap-8 gap-y-16'>
         {
           data.map((d) => (
-            <li>
-              <video autoplay loop>
-                <source src={d.video.publicUrl} type='video/mp4' />
-              </video>
-              <div>
-                <h3 class='text-center'>
-                  <a href={`/sketches/${d.name}`}>{d.name} </a>
-                </h3>
+            <div>
+              <CodeFrame jsCode={d.data.sketch} client:load />
+              <div class='flex justify-center'>
+                <a href={`/sketches/${d.data.name}`} class='text-center'>
+                  {d.data.name}
+                </a>
               </div>
-            </li>
+            </div>
           ))
         }
-      </ul>
+      </div>
     </section>
   </main>
 </Layout>

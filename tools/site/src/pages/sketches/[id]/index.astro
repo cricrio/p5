@@ -1,25 +1,30 @@
 ---
-import data from '../../../../data.json';
+// import data from '../../../content/sketches.json';
+import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+import { CodeFrame } from '@/src/components/CodeFrame';
 
-export function getStaticPaths() {
-  return data.map((i) => ({ params: { id: i.name } }));
+export async function getStaticPaths() {
+  const data = await getCollection('sketches');
+
+  return data.map((item) => ({ params: { id: item.id } }));
 }
-const siteUrl = import.meta.env.SITE_URL;
 
 const { id } = Astro.params;
+const siteUrl = import.meta.env.SITE_URL;
+const data = await getCollection('sketches', (item) => item.id === id);
+
+const sketchData = data[0].data;
 ---
 
 <Layout title={id}>
-  <section class='md:w-9/12 w-full m-auto'>
-    <h1 class='font-bold'>
+  <section class='md:w-9/12 w-full h-full m-auto'>
+    <h1 class='font-bold mt-4 mb-8'>
       <a href='/'>Sketches {'> '}</a>
       {id}
     </h1>
-
-    <iframe
-      src=`${siteUrl}/sketches/${id}/fullscreen`
-      class='w-full aspect-video'>Loading sketch ...</iframe
-    >
+    <div class='h-3/6'>
+      <CodeFrame jsCode={sketchData.sketch} client:load />
+    </div>
   </section>
 </Layout>

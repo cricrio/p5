@@ -7,11 +7,18 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "yolo": "tsx ./scr/content.config.ts"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.1.2",
-    "astro": "^4.16.15",
-    "tailwindcss": "^3.4.15"
+    "@astrojs/preact": "^4.1.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "astro": "^5.11.0",
+    "preact": "^10.26.9",
+    "tailwindcss": "^4.1.11",
+    "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
   }
 }
