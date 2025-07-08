@@ -32,7 +32,7 @@
         "src/tests/*"
       ],
       "@styles/*": [
-        "./styles/*"
+        "src/styles/*"
       ],
     }
   }
