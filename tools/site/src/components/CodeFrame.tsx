@@ -1,6 +1,5 @@
 import { useRef, useLayoutEffect, useState, useEffect } from 'preact/hooks';
 import { cdnLibraryUrl } from '@/src/globals/globals';
-import { cos } from 'three/tsl';
 
 interface CodeBundle {
   css?: string;
