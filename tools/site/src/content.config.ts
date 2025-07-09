@@ -34,7 +34,9 @@ function sketchLoader(): Loader {
       if (!fs.existsSync(directory)) {
         throw new Error(`Sketch directory does not exist: ${sketchDirectory}`);
       }
-      console.log('tetet');
+
+      context.store.clear();
+
       try {
         const res = fs
           .readdirSync(directory, { withFileTypes: true })

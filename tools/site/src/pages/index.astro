@@ -2,8 +2,9 @@
 import Layout from '@layouts/Layout.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { CodeFrame } from '@components/CodeFrame';
+import Card from '../components/Card.astro';
 
-const data = await getCollection('sketches');
+const data = (await getCollection('sketches')).sort();
 ---
 
 <Layout title='Welcome to Astro.'>
@@ -13,14 +14,9 @@ const data = await getCollection('sketches');
       <div class='grid grid-cols-2 gap-8 gap-y-16'>
         {
           data.map((d) => (
-            <div>
+            <Card href={`/sketches/${d.data.name}`} title={d.data.name}>
               <CodeFrame jsCode={d.data.sketch} client:load />
-              <div class='flex justify-center'>
-                <a href={`/sketches/${d.data.name}`} class='text-center'>
-                  {d.data.name}
-                </a>
-              </div>
-            </div>
+            </Card>
           ))
         }
       </div>
