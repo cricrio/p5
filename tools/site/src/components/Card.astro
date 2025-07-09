@@ -7,11 +7,13 @@ interface Props {
 const { href, title } = Astro.props;
 ---
 
-<div>
-  <a href={href}>
-    <slot />
-    <h2 class='bg-slate-700 hover:bg-slate-500 p-1 text-center rounded-b-md'>
-      {title}
-    </h2>
-  </a>
+<div class='rounded-md overflow-hidden'>
+  <div>
+    <a href={href}>
+      <slot />
+      <h2 class='bg-slate-700 hover:bg-slate-500 p-1 text-center'>
+        {title}
+      </h2>
+    </a>
+  </div>
 </div>

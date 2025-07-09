@@ -11,7 +11,7 @@ const data = (await getCollection('sketches')).sort();
   <main>
     <section>
       <h2 class='font-medium'>Sketches</h2>
-      <div class='grid grid-cols-2 gap-8 gap-y-16'>
+      <div class='grid grid-cols-1 sm:grid-cols-2 gap-8 gap-y-16'>
         {
           data.map((d) => (
             <Card href={`/sketches/${d.data.name}`} title={d.data.name}>
