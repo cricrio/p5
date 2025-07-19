@@ -23,7 +23,7 @@ if (!sketchData) return Astro.redirect('/');
 ---
 
 <Layout title={id}>
-  <div class='md:w-9/12 w-full m-auto flex flex-col gap-8 py-4'>
+  <div class='md:w-9/12 w-full m-auto flex flex-col gap-8 p-6'>
     <section class='h-2/4'>
       <h1 class='font-bold text-2xl mb-4'>
         <a href='/'>Sketches {'> '}</a>
@@ -39,7 +39,6 @@ if (!sketchData) return Astro.redirect('/');
       <Code
         code={sketchData.data.sketch}
         lang='js'
-        meta='title=ettet.js'
         transformers={[
           {
             name: 'title',
