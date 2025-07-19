@@ -2,3 +2,5 @@
 **/**/.env
 
 **/time-cut-temp-*/
+.DS_Store
+sketches/.DS_Store

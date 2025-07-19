@@ -43,14 +43,14 @@ if (!sketchData) return Astro.redirect('/');
         transformers={[
           {
             name: 'title',
-            pre(node) {
+            root(node) {
               const preHeaderDiv = node.children[0];
 
               const titleSpan = h(
                 'div',
                 {
                   class:
-                    'border-white border-t-2 p-2 inline-block bg-[#24292e]',
+                    'border-white border-t-2 p-2 inline-block bg-[#24292e] font-medium',
                 },
                 'sketch.js'
               );
@@ -58,7 +58,7 @@ if (!sketchData) return Astro.redirect('/');
               const titleDiv = h(
                 'div',
                 {
-                  class: 'bg-[#13151a] mb-2',
+                  class: 'bg-[#13151a]  w-100 min-w-full',
                 },
                 titleSpan
               );
@@ -66,8 +66,8 @@ if (!sketchData) return Astro.redirect('/');
               node.children = [titleDiv, preHeaderDiv];
             },
 
-            line(node) {
-              this.addClassToHast(node, 'mx-2');
+            pre(node) {
+              this.addClassToHast(node, 'p-2');
             },
           },
         ]}
