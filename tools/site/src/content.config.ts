@@ -1,72 +1,24 @@
 import { defineCollection, z } from 'astro:content';
-import { glob, file, type Loader, type LoaderContext } from 'astro/loaders';
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { glob } from 'astro/loaders';
 
-function sketchLoader(): Loader {
-  const directory = `${path.dirname(
-    fileURLToPath(import.meta.url)
-  )}${sketchDirectory}`;
+import { sketchLoader } from './loaders/sketch';
 
-  if (!fs.existsSync(directory)) {
-    throw new Error(`Sketch directory does not exist: ${sketchDirectory}`);
-  }
-  console.log('tetet');
-  const result = fs
-    .readdirSync(directory, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => ({
-      id: dirent.name,
-      name: dirent.name,
-      sketch: fs.readFileSync(`${directory}/${dirent.name}/sketch.js`, {
-        encoding: 'utf8',
-      }),
-    }));
-
-  return {
-    name: 'kesese',
-    load: async (context: LoaderContext) => {
-      const directory = `${path.dirname(
-        fileURLToPath(import.meta.url)
-      )}${sketchDirectory}`;
-
-      if (!fs.existsSync(directory)) {
-        throw new Error(`Sketch directory does not exist: ${sketchDirectory}`);
-      }
-
-      context.store.clear();
-
-      try {
-        const res = fs
-          .readdirSync(directory, { withFileTypes: true })
-          .filter((dirent) => dirent.isDirectory())
-          .map((dirent) => ({
-            id: dirent.name,
-            name: dirent.name,
-            sketch: fs.readFileSync(`${directory}/${dirent.name}/sketch.js`, {
-              encoding: 'utf8',
-            }),
-          }));
-        // console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-      for (const s of result) {
-        console.log(s);
-        context.store.set({
-          id: s.id,
-          data: s,
-        });
-      }
-    },
-  };
-}
-
-const sketchDirectory = '/content/sketches';
-
-const sketches = defineCollection({
-  loader: sketchLoader(),
+const postSketches = defineCollection({
+  loader: glob({
+    pattern: './src/content/sketches/**/post.md',
+    generateId: ({ entry }) => entry.split('/')[3],
+  }),
+  schema: z.object({
+    title: z.string(),
+    publish: z.boolean(),
+  }),
 });
 
-export const collections = { sketches };
+const sketches = defineCollection({
+  loader: sketchLoader({ pattern: './sketches/**/sketch.js' }),
+  schema: z.object({
+    sketch: z.string(),
+  }),
+});
+
+export const collections = { sketches, postSketches };

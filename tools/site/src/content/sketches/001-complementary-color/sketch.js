@@ -25,8 +25,8 @@ function draw() {
     1 - blue(primaryColor)
   );
 
-  const midX = Math.floor(width / 2);
-  const midY = Math.floor(height / 2);
+  const midX = Math.ceil(width / 2);
+  const midY = Math.ceil(height / 2);
   const circleWidth = height / 4;
 
   fill(secondaryColor);

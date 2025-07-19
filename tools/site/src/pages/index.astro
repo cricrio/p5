@@ -1,21 +1,38 @@
 ---
 import Layout from '@layouts/Layout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { CodeFrame } from '@components/CodeFrame';
-import Card from '../components/Card.astro';
+import Card from '@components/Card.astro';
 
-const data = (await getCollection('sketches')).sort();
+const needingAllSketches = Astro.url.searchParams.get('all') === 'true';
+const sketches = (await getCollection('sketches')).sort();
+
+const posts = await getCollection(
+  'postSketches',
+  ({ data: { publish } }) => needingAllSketches || publish
+);
+
+const data = posts
+  .map((post) => {
+    const sketch = sketches.find((sketch) => post.id === sketch.id);
+    return {
+      id: post.id,
+      title: post.data.title || post.id,
+      sketch: sketch?.data.sketch ?? '',
+    };
+  })
+  .filter((s) => s.sketch);
 ---
 
 <Layout title='Welcome to Astro.'>
   <main>
     <section>
-      <h2 class='font-medium'>Sketches</h2>
+      <h2 class='font-bold text-2xl mb-4'>Sketches</h2>
       <div class='grid grid-cols-1 sm:grid-cols-2 gap-8 gap-y-16'>
         {
           data.map((d) => (
-            <Card href={`/sketches/${d.data.name}`} title={d.data.name}>
-              <CodeFrame jsCode={d.data.sketch} client:load />
+            <Card href={`/sketches/${d.id}`} title={d.title}>
+              <CodeFrame jsCode={d.sketch} client:load />
             </Card>
           ))
         }

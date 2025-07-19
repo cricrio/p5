@@ -19,6 +19,8 @@ const wrapInMarkup = (code: CodeBundle) =>
 html, body {
   margin: 0;
   padding: 0;
+  background: white;
+  overflow: hidden;
 }
 canvas {
   display: block;
@@ -55,7 +57,7 @@ export const CodeFrame = (props: CodeFrameProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  console.log({ mounted });
+
   // For performance, set the iframe to display:none when
   // not visible on the page. This will stop the browser
   // from running `draw` every frame, which helps performance
@@ -122,9 +124,9 @@ export const CodeFrame = (props: CodeFrameProps) => {
       }
     })();
   }, [props.jsCode, mounted]);
-  console.log({ mounted });
+
   return (
-    <div ref={containerRef} className='w-full h-full'>
+    <div ref={containerRef} className='w-full aspect-video'>
       <iframe
         ref={iframeRef}
         srcDoc={

@@ -3,6 +3,10 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { CodeFrame } from '@/src/components/CodeFrame';
+import CodeContent from '@/src/components/CodeContent.astro';
+import { getEntry } from 'astro:content';
+import { Code } from 'astro:components';
+import { h } from 'hastscript';
 
 export async function getStaticPaths() {
   const data = await getCollection('sketches');
@@ -11,20 +15,63 @@ export async function getStaticPaths() {
 }
 
 const { id } = Astro.params;
-const siteUrl = import.meta.env.SITE_URL;
-const data = await getCollection('sketches', (item) => item.id === id);
 
-const sketchData = data[0].data;
+const postData = await getEntry('postSketches', id);
+const sketchData = await getEntry('sketches', id);
+
+if (!sketchData) return Astro.redirect('/');
 ---
 
 <Layout title={id}>
-  <section class='md:w-9/12 w-full h-full m-auto'>
-    <h1 class='font-bold mt-4 mb-8'>
-      <a href='/'>Sketches {'> '}</a>
-      {id}
-    </h1>
-    <div class='h-3/6'>
-      <CodeFrame jsCode={sketchData.sketch} client:load />
-    </div>
-  </section>
+  <div class='md:w-9/12 w-full m-auto flex flex-col gap-8 py-4'>
+    <section class='h-2/4'>
+      <h1 class='font-bold text-2xl mb-4'>
+        <a href='/'>Sketches {'> '}</a>
+        {postData?.data.title || id}
+      </h1>
+
+      <div class='flex-1'>
+        <CodeFrame jsCode={sketchData.data.sketch} client:load />
+      </div>
+    </section>
+    <section>
+      <h2 class='font-bold text-2xl mb-4'>Code</h2>
+      <Code
+        code={sketchData.data.sketch}
+        lang='js'
+        meta='title=ettet.js'
+        transformers={[
+          {
+            name: 'title',
+            pre(node) {
+              const preHeaderDiv = node.children[0];
+
+              const titleSpan = h(
+                'div',
+                {
+                  class:
+                    'border-white border-t-2 p-2 inline-block bg-[#24292e]',
+                },
+                'sketch.js'
+              );
+
+              const titleDiv = h(
+                'div',
+                {
+                  class: 'bg-[#13151a] mb-2',
+                },
+                titleSpan
+              );
+
+              node.children = [titleDiv, preHeaderDiv];
+            },
+
+            line(node) {
+              this.addClassToHast(node, 'mx-2');
+            },
+          },
+        ]}
+      />
+    </section>
+  </div>
 </Layout>
