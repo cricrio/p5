@@ -1,10 +1,28 @@
 import { type Loader } from 'astro/loaders';
-import { log } from 'node:console';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
-const sketchDirectory = '/content/sketches';
-import { glob as tinyglobby } from 'tinyglobby';
+
+function loadSteps(sketchPath: string) {
+  const stepsPath = path.join(sketchPath, 'steps');
+  if (!fs.existsSync(stepsPath)) {
+    return [];
+  }
+
+  const steps = fs
+    .readdirSync(stepsPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isFile() && dirent.name.endsWith('.js'))
+    .map((dirent) => {
+      const stepPath = path.join(stepsPath, dirent.name);
+      return {
+        path: stepPath,
+        name: dirent.name,
+        content: fs.readFileSync(stepPath, { encoding: 'utf8' }),
+      };
+    });
+
+  return steps;
+}
 
 export function sketchLoader({ pattern }): Loader {
   const fileToIdMap = new Map<string, string>();
@@ -26,14 +44,22 @@ export function sketchLoader({ pattern }): Loader {
         .map((dirent) => {
           const path = `${sketchDirectory}${dirent.name}/sketch.js`;
           const id = dirent.name;
-          console.log(path);
+
+          const steps = loadSteps(`${sketchDirectory}${dirent.name}`);
+
           fileToIdMap.set(path, id);
+          steps.forEach((step) => {
+            fileToIdMap.set(`${id}/${step.name}`, step.path);
+          });
 
           return {
             id,
             sketch: fs.readFileSync(path, {
               encoding: 'utf8',
             }),
+            steps: Object.fromEntries(
+              steps.map((step) => [step.name, step.content])
+            ),
           };
         });
 
@@ -49,7 +75,7 @@ export function sketchLoader({ pattern }): Loader {
       if (!watcher) {
         return;
       }
-      console.log(sketchDirectory);
+
       watcher.add(sketchDirectory);
 
       function onChange(changedPath: string) {
@@ -57,7 +83,7 @@ export function sketchLoader({ pattern }): Loader {
           return;
         }
         const id = fileToIdMap.get(changedPath);
-        logger.info([...fileToIdMap.keys()].toString());
+
         if (!id) {
           logger.info(
             `Unabled to find in ${changedPath} in store. You may need to restart astro.`

@@ -11,9 +11,11 @@
     "yolo": "tsx ./scr/content.config.ts"
   },
   "dependencies": {
+    "@astrojs/markdoc": "^0.15.1",
+    "@astrojs/mdx": "^4.3.1",
     "@astrojs/preact": "^4.1.0",
     "@tailwindcss/vite": "^4.1.11",
-    "astro": "^5.11.0",
+    "astro": "^5.12.1",
     "hastscript": "^9.0.1",
     "preact": "^10.26.9",
     "tailwindcss": "^4.1.11",

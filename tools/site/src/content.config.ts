@@ -5,7 +5,7 @@ import { sketchLoader } from './loaders/sketch';
 
 const postSketches = defineCollection({
   loader: glob({
-    pattern: './src/content/sketches/**/post.md',
+    pattern: './src/content/sketches/**/post.{mdoc,md}',
     generateId: ({ entry }) => entry.split('/')[3],
   }),
   schema: z.object({
@@ -18,6 +18,7 @@ const sketches = defineCollection({
   loader: sketchLoader({ pattern: './sketches/**/sketch.js' }),
   schema: z.object({
     sketch: z.string(),
+    steps: z.record(z.string(), z.string()),
   }),
 });
 

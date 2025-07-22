@@ -1,0 +1,43 @@
+---
+import { Code } from 'astro:components';
+import { getEntry, type ValidContentEntrySlug } from 'astro:content';
+import { h } from 'hastscript';
+
+const code = await Astro.slots.render('default');
+---
+
+<Code
+  code={code}
+  lang='js'
+  transformers={[
+    {
+      name: 'title',
+      root(node) {
+        const preHeaderDiv = node.children[0];
+
+        const titleSpan = h(
+          'div',
+          {
+            class:
+              'border-white border-t-2 p-2 inline-block bg-[#24292e] font-medium',
+          },
+          'sketch.js'
+        );
+
+        const titleDiv = h(
+          'div',
+          {
+            class: 'bg-[#13151a]  w-100 min-w-full',
+          },
+          titleSpan
+        );
+
+        node.children = [titleDiv, preHeaderDiv];
+      },
+
+      pre(node) {
+        this.addClassToHast(node, 'p-2');
+      },
+    },
+  ]}
+/>

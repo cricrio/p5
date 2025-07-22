@@ -3,23 +3,25 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { CodeFrame } from '@/src/components/CodeFrame';
-import CodeContent from '@/src/components/CodeContent.astro';
 import { getEntry } from 'astro:content';
-import { Code } from 'astro:components';
-import { h } from 'hastscript';
+
+import CodeBlock from '@/src/components/CodeBlock.astro';
+import { render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const data = await getCollection('sketches');
+  const data = await getCollection('postSketches');
 
-  return data.map((item) => ({ params: { id: item.id } }));
+  return data.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
 }
 
 const { id } = Astro.params;
-
-const postData = await getEntry('postSketches', id);
+const { entry } = Astro.props;
+const postData = entry;
 const sketchData = await getEntry('sketches', id);
 
-if (!sketchData) return Astro.redirect('/');
+if (!sketchData || !postData) return Astro.redirect('/');
+console.log({ lol: postData });
+const { Content } = await render(postData);
 ---
 
 <Layout title={id}>
@@ -29,48 +31,14 @@ if (!sketchData) return Astro.redirect('/');
         <a href='/'>Sketches {'> '}</a>
         {postData?.data.title || id}
       </h1>
-
       <div class='flex-1'>
         <CodeFrame jsCode={sketchData.data.sketch} client:load />
       </div>
-    </section>
-    <section>
-      <h2 class='font-bold text-2xl mb-4'>Code</h2>
-      <Code
-        code={sketchData.data.sketch}
-        lang='js'
-        transformers={[
-          {
-            name: 'title',
-            root(node) {
-              const preHeaderDiv = node.children[0];
-
-              const titleSpan = h(
-                'div',
-                {
-                  class:
-                    'border-white border-t-2 p-2 inline-block bg-[#24292e] font-medium',
-                },
-                'sketch.js'
-              );
-
-              const titleDiv = h(
-                'div',
-                {
-                  class: 'bg-[#13151a]  w-100 min-w-full',
-                },
-                titleSpan
-              );
-
-              node.children = [titleDiv, preHeaderDiv];
-            },
-
-            pre(node) {
-              this.addClassToHast(node, 'p-2');
-            },
-          },
-        ]}
-      />
+      <Content />
+      <section>
+        <h2 class='font-bold text-2xl mb-4'>Code</h2>
+        <CodeBlock>{sketchData.data.sketch}</CodeBlock>
+      </section>
     </section>
   </div>
 </Layout>

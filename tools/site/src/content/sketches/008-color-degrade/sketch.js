@@ -11,7 +11,7 @@ function lerpSquare(posX, posY, colorFrom, colorTo) {
   for (let x = 0; x <= step; x++) {
     const inter = lerpColor(colorFrom, colorTo, x / step);
     fill(inter);
-    square(posX, posY, (width / step) * (step - x));
+    square(posX, posY, Math.ceil((width / step) * (step - x)));
   }
 }
 
