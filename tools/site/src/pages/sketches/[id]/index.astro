@@ -1,5 +1,4 @@
 ---
-// import data from '../../../content/sketches.json';
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { CodeFrame } from '@/src/components/CodeFrame';
@@ -20,7 +19,7 @@ const postData = entry;
 const sketchData = await getEntry('sketches', id);
 
 if (!sketchData || !postData) return Astro.redirect('/');
-console.log({ lol: postData });
+
 const { Content } = await render(postData);
 ---
 
@@ -31,13 +30,17 @@ const { Content } = await render(postData);
         <a href='/'>Sketches {'> '}</a>
         {postData?.data.title || id}
       </h1>
-      <div class='flex-1'>
-        <CodeFrame jsCode={sketchData.data.sketch} client:load />
+      <div class='flex-1 mb-4'>
+        <CodeFrame
+          jsCode={sketchData.data.sketch}
+          canPause={postData.data.animated}
+          client:load
+        />
       </div>
-      <Content />
+      <Content steps={sketchData.data.steps} />
       <section>
         <h2 class='font-bold text-2xl mb-4'>Code</h2>
-        <CodeBlock>{sketchData.data.sketch}</CodeBlock>
+        <CodeBlock code={sketchData.data.sketch} />
       </section>
     </section>
   </div>

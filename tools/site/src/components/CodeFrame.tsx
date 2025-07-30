@@ -1,4 +1,10 @@
-import { useRef, useLayoutEffect, useState, useEffect } from 'preact/hooks';
+import {
+  useRef,
+  useLayoutEffect,
+  useState,
+  useEffect,
+  useCallback,
+} from 'preact/hooks';
 import { cdnLibraryUrl } from '@/src/globals/globals';
 
 interface CodeBundle {
@@ -24,6 +30,7 @@ html, body {
 }
 canvas {
   display: block;
+  margin: auto;
 }
 ${code.css || ''}
 </style>
@@ -47,6 +54,7 @@ ${code.css || ''}
 export interface CodeFrameProps {
   jsCode: string;
   cssCode?: string;
+  canPause?: boolean;
 }
 
 /*
@@ -56,6 +64,8 @@ export interface CodeFrameProps {
 export const CodeFrame = (props: CodeFrameProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [pausedFrameRate, setPausedFrameRate] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   // For performance, set the iframe to display:none when
@@ -125,8 +135,42 @@ export const CodeFrame = (props: CodeFrameProps) => {
     })();
   }, [props.jsCode, mounted]);
 
+  const toggleRunning = () => {
+    console.log({ paused });
+    if (paused) {
+      resume();
+      setPaused(false);
+    } else {
+      pause();
+      setPaused(true);
+    }
+  };
+  const pause = useCallback(() => {
+    if (!iframeRef.current) return;
+    const p5Window = iframeRef.current.contentWindow;
+
+    if (!p5Window) return;
+
+    const targetFrameRate = p5Window.getTargetFrameRate?.();
+    if (targetFrameRate > 0 && p5Window.frameRate) {
+      p5Window.frameRate(0);
+      setPausedFrameRate(targetFrameRate);
+    }
+  }, [iframeRef]);
+
+  const resume = useCallback(() => {
+    if (!iframeRef.current) return;
+    const p5Window = iframeRef.current.contentWindow;
+
+    if (!p5Window) return;
+
+    if (pausedFrameRate > 0 && p5Window.frameRate) {
+      p5Window.frameRate(pausedFrameRate);
+    }
+  }, [iframeRef, pausedFrameRate]);
+
   return (
-    <div ref={containerRef} className='w-full aspect-video'>
+    <div ref={containerRef} className='w-full aspect-video relative'>
       <iframe
         ref={iframeRef}
         srcDoc={
@@ -137,11 +181,19 @@ export const CodeFrame = (props: CodeFrameProps) => {
               })
             : ''
         }
-        sandbox='allow-scripts allow-popups allow-modals allow-forms'
+        sandbox='allow-scripts allow-popups allow-modals allow-forms allow-same-origin'
         aria-label='Code Preview'
         title='Code Preview'
         className='w-full h-full'
       />
+      {props.canPause && (
+        <span
+          onClick={toggleRunning}
+          className='absolute bottom-0 right-0 p-2 bg-slate-400 rounded-tl-md'
+        >
+          {paused ? 'play' : 'pause'}
+        </span>
+      )}
     </div>
   );
 };

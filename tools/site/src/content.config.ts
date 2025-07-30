@@ -5,12 +5,13 @@ import { sketchLoader } from './loaders/sketch';
 
 const postSketches = defineCollection({
   loader: glob({
-    pattern: './src/content/sketches/**/post.{mdoc,md}',
+    pattern: './src/content/sketches/**/post.{mdoc,md,mdx}',
     generateId: ({ entry }) => entry.split('/')[3],
   }),
   schema: z.object({
     title: z.string(),
     publish: z.boolean(),
+    animated: z.boolean().optional(),
   }),
 });
 

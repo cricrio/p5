@@ -1,9 +1,9 @@
 ---
 import { Code } from 'astro:components';
-import { getEntry, type ValidContentEntrySlug } from 'astro:content';
 import { h } from 'hastscript';
 
-const code = await Astro.slots.render('default');
+const { code } = Astro.props;
+console.log({ code });
 ---
 
 <Code

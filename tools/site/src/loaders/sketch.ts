@@ -16,8 +16,8 @@ function loadSteps(sketchPath: string) {
       const stepPath = path.join(stepsPath, dirent.name);
       return {
         path: stepPath,
-        name: dirent.name,
-        content: fs.readFileSync(stepPath, { encoding: 'utf8' }),
+        name: path.parse(stepPath).name,
+        content: fs.readFileSync(stepPath, 'utf-8'),
       };
     });
 
@@ -47,16 +47,21 @@ export function sketchLoader({ pattern }): Loader {
 
           const steps = loadSteps(`${sketchDirectory}${dirent.name}`);
 
+          if (steps.length) {
+            console.log(
+              { steps },
+              Object.fromEntries(steps.map((step) => [step.name, step.content]))
+            );
+          }
+
           fileToIdMap.set(path, id);
           steps.forEach((step) => {
-            fileToIdMap.set(`${id}/${step.name}`, step.path);
+            fileToIdMap.set(step.path, `${id}/${step.name}`);
           });
 
           return {
             id,
-            sketch: fs.readFileSync(path, {
-              encoding: 'utf8',
-            }),
+            sketch: fs.readFileSync(path, 'utf-8'),
             steps: Object.fromEntries(
               steps.map((step) => [step.name, step.content])
             ),
@@ -68,7 +73,7 @@ export function sketchLoader({ pattern }): Loader {
       for (const s of sketches) {
         store.set({
           id: s.id,
-          data: { sketch: s.sketch },
+          data: { sketch: s.sketch, steps: s.steps },
         });
       }
 
@@ -91,13 +96,18 @@ export function sketchLoader({ pattern }): Loader {
           return;
         }
 
-        const sketch = fs.readFileSync(changedPath, {
-          encoding: 'utf8',
-        });
-        console.log({ id });
+        const sketch = fs.readFileSync(changedPath, 'utf-8');
+
+        const steps = loadSteps(changedPath);
+
         store.set({
           id,
-          data: { sketch: sketch },
+          data: {
+            sketch: sketch,
+            steps: Object.fromEntries(
+              steps.map((step) => [step.name, step.content])
+            ),
+          },
         });
       }
 
