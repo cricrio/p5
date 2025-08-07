@@ -25,7 +25,11 @@ function loadSteps(sketchPath: string) {
 }
 
 export function sketchLoader({ pattern }): Loader {
-  const fileToIdMap = new Map<string, string>();
+  const fileToIdMap = new Map<
+    string,
+    | { id: string; type: 'sketch' }
+    | { type: 'steps'; id: string; stepId: string }
+  >();
 
   return {
     name: 'sketchLoader',
@@ -44,19 +48,18 @@ export function sketchLoader({ pattern }): Loader {
         .map((dirent) => {
           const path = `${sketchDirectory}${dirent.name}/sketch.js`;
           const id = dirent.name;
+          const directory = `${sketchDirectory}${dirent.name}`;
 
-          const steps = loadSteps(`${sketchDirectory}${dirent.name}`);
+          const steps = loadSteps(directory);
 
-          if (steps.length) {
-            console.log(
-              { steps },
-              Object.fromEntries(steps.map((step) => [step.name, step.content]))
-            );
-          }
+          fileToIdMap.set(path, { id, type: 'sketch' });
 
-          fileToIdMap.set(path, id);
           steps.forEach((step) => {
-            fileToIdMap.set(step.path, `${id}/${step.name}`);
+            fileToIdMap.set(step.path, {
+              id,
+              type: 'steps',
+              stepId: step.name,
+            });
           });
 
           return {
@@ -87,28 +90,41 @@ export function sketchLoader({ pattern }): Loader {
         if (!changedPath.startsWith(sketchDirectory)) {
           return;
         }
-        const id = fileToIdMap.get(changedPath);
 
-        if (!id) {
+        const identifier = fileToIdMap.get(changedPath);
+        console.log(identifier);
+        if (!identifier) {
           logger.info(
             `Unabled to find in ${changedPath} in store. You may need to restart astro.`
           );
           return;
         }
 
-        const sketch = fs.readFileSync(changedPath, 'utf-8');
+        if (identifier.type === 'sketch') {
+          const sketch = store.get(identifier.id);
+          const sketchScript = fs.readFileSync(changedPath, 'utf-8');
+          store.set({
+            id: identifier.id,
+            data: { ...sketch?.data, sketch: sketchScript },
+          });
+        } else if (identifier.type === 'steps') {
+          const updatedScript = fs.readFileSync(changedPath, 'utf-8');
+          const sketch = store.get(identifier.id);
+          console.log(sketch);
+          store.set({
+            id: identifier.id,
 
-        const steps = loadSteps(changedPath);
+            data: {
+              ...sketch?.data,
+              steps: {
+                ...(sketch?.data?.steps ?? {}),
+                [identifier.stepId]: updatedScript,
+              },
+            },
+          });
 
-        store.set({
-          id,
-          data: {
-            sketch: sketch,
-            steps: Object.fromEntries(
-              steps.map((step) => [step.name, step.content])
-            ),
-          },
-        });
+          console.log(store.get(identifier.id));
+        }
       }
 
       watcher.on('change', onChange);

@@ -1,0 +1,4 @@
+---
+title: "Slider"
+publish: true
+---

@@ -1,1 +1,6 @@
 @import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@utility prose {
+ max-width: none;
+}

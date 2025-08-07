@@ -3,41 +3,42 @@ import { Code } from 'astro:components';
 import { h } from 'hastscript';
 
 const { code } = Astro.props;
-console.log({ code });
 ---
 
-<Code
-  code={code}
-  lang='js'
-  transformers={[
-    {
-      name: 'title',
-      root(node) {
-        const preHeaderDiv = node.children[0];
+<div>
+  <Code
+    code={code}
+    lang='js'
+    transformers={[
+      {
+        name: 'title',
+        root(node) {
+          const preHeaderDiv = node.children[0];
 
-        const titleSpan = h(
-          'div',
-          {
-            class:
-              'border-white border-t-2 p-2 inline-block bg-[#24292e] font-medium',
-          },
-          'sketch.js'
-        );
+          const titleSpan = h(
+            'div',
+            {
+              class:
+                'border-white border-t-2 p-2 inline-block bg-[#24292e] font-medium',
+            },
+            'sketch.js'
+          );
 
-        const titleDiv = h(
-          'div',
-          {
-            class: 'bg-[#13151a]  w-100 min-w-full',
-          },
-          titleSpan
-        );
+          const titleDiv = h(
+            'div',
+            {
+              class: 'bg-[#13151a]  w-100 min-w-full',
+            },
+            titleSpan
+          );
 
-        node.children = [titleDiv, preHeaderDiv];
+          node.children = [titleDiv, preHeaderDiv];
+        },
+
+        pre(node) {
+          this.addClassToHast(node, 'px-2');
+        },
       },
-
-      pre(node) {
-        this.addClassToHast(node, 'p-2');
-      },
-    },
-  ]}
-/>
+    ]}
+  />
+</div>

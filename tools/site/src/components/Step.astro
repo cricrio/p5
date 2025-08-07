@@ -1,0 +1,13 @@
+---
+import CodeBlock from './CodeBlock.astro';
+import { CodeFrame } from './CodeFrame';
+
+const { code } = Astro.props;
+---
+
+<div class='grid grid-cols-2 not-prose'>
+  <CodeBlock code={code || ''} />
+  <div>
+    <CodeFrame client:only jsCode={code || ''} />
+  </div>
+</div>

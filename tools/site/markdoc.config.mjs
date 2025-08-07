@@ -8,5 +8,11 @@ export default defineMarkdocConfig({
         code: { type: String },
       },
     },
+    step: {
+      render: component('./src/components/Step.astro'),
+      attributes: {
+        code: { type: String },
+      },
+    },
   },
 });
