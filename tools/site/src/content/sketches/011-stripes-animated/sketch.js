@@ -11,7 +11,12 @@ function windowResized() {
   resizeCanvas(windowHeight, windowHeight);
 }
 
-
+function stripes(posX, posY, width, numStripe) {
+  for (let x = 0; x <= numStripe; x++) {
+    fill(x % 2 ? 'black' : 'white');
+    rect(posX, posY + x * (width / numStripe), width, width / numStripe);
+  }
+}
 
 let numStripe = numStripeMin;
 let direction = 1;
