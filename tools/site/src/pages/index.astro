@@ -13,7 +13,7 @@ const posts = await getCollection(
 );
 
 const data = posts
-  .toSorted((a, b) => parseInt(b.id) - parseInt(a.id))
+  .sort((a, b) => parseInt(b.id) - parseInt(a.id))
   .map((post) => {
     const sketch = sketches.find((sketch) => post.id === sketch.id);
     return {
