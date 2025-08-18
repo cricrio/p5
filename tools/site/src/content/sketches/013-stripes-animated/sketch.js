@@ -37,14 +37,19 @@ class Stripe {
 
 function generateStripes(x, y, width) {
   const heigth = width / 7;
+
+  //position de la stripe du centre
   const centerStripeY = {
-    origin: y + (width - heigth) / 2,
-    target: y + (width - heigth) / 2,
+    origin: y + width / 2,
+    target: y + width / 2,
   };
+
+  //la position des stripes est relative à leur centre
+  const centeredX = x + width / 2;
 
   return [
     new Stripe({
-      x,
+      x: centeredX,
       y: {
         target: centerStripeY.origin,
         origin: centerStripeY.origin - 2 * heigth,
@@ -53,13 +58,13 @@ function generateStripes(x, y, width) {
       heigth,
     }),
     new Stripe({
-      x,
+      x: centeredX,
       y: centerStripeY,
       width,
       heigth,
     }),
     new Stripe({
-      x,
+      x: centeredX,
       y: {
         target: centerStripeY.origin,
         origin: centerStripeY.origin + 2 * heigth,
@@ -74,7 +79,7 @@ let stripes = [];
 
 function setup() {
   const width = windowHeight / numCol;
-
+  rectMode(CENTER);
   createCanvas(windowHeight, windowHeight);
   frameRate(52);
   noStroke();
@@ -111,7 +116,10 @@ function draw() {
     for (let x = 0; x <= numCol; x++) {
       const offset = x % 2;
       if ((offset + y) % 2) {
-        rect(x * width, y * width, width, width);
+        //les position sont relatives aux centre des rectangles. Il faut les décaler de la moitié de la largeur (width)
+        //rect(x * width + 0.5 * width, y * width + 0.5 * width, width, width);
+
+        rect((x + 0.5) * width, (y + 0.5) * width, width, width);
       }
     }
   }
