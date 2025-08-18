@@ -60,7 +60,7 @@ function draw() {
   background(0, 0, 0);
 
   push();
-  translate(width / 2, height / 2);
+  translate((width - 200) / 2, height / 2);
   dots.forEach((element) => {
     element.draw();
   });
