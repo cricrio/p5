@@ -5,7 +5,7 @@ import { CodeFrame } from '@components/CodeFrame';
 import Card from '@components/Card.astro';
 
 const needingAllSketches = Astro.url.searchParams.get('all') === 'true';
-const sketches = (await getCollection('sketches')).sort();
+const sketches = await getCollection('sketches');
 
 const posts = await getCollection(
   'postSketches',
@@ -13,6 +13,7 @@ const posts = await getCollection(
 );
 
 const data = posts
+  .toSorted((a, b) => parseInt(b.id) - parseInt(a.id))
   .map((post) => {
     const sketch = sketches.find((sketch) => post.id === sketch.id);
     return {
