@@ -25,7 +25,7 @@ if (!sketchData || !postData) return Astro.redirect('/');
 const { Content } = await render(postData);
 ---
 
-<Layout title={id}>
+<Layout title={postData.data.title}>
   <div class='md:w-9/12 w-full m-auto flex flex-col gap-8 p-6'>
     <section class='h-2/4'>
       <h1 class='font-bold text-2xl mb-4'>
