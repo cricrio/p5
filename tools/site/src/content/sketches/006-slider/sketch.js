@@ -28,8 +28,6 @@ class Dot {
     translate(this.position, 0);
     fill(dotColor);
     circle(0, 0, 30);
-    fill(255, 255, 255, 255);
-    circle(0, 20, 30);
     pop();
   }
 }
