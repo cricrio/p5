@@ -56,8 +56,8 @@ function draw() {
   const rows = Math.ceil((height / verticalDistance + 1) / 2);
   const colums = Math.ceil((width / horizontalDistance + 1) / 2);
 
-  const centerX = width / 2;
-  const centerY = height / 2;
+  const centerX = Math.ceil(width / 2);
+  const centerY = Math.ceil(height / 2);
 
   for (let c = -colums; c < colums; c++) {
     for (let r = -rows; r < rows; r++) {
