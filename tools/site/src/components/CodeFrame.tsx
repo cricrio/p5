@@ -55,6 +55,7 @@ export interface CodeFrameProps {
   jsCode: string;
   cssCode?: string;
   canPause?: boolean;
+  fullScreen?: boolean;
 }
 
 /*
@@ -170,7 +171,12 @@ export const CodeFrame = (props: CodeFrameProps) => {
   }, [iframeRef, pausedFrameRate]);
 
   return (
-    <div ref={containerRef} className='w-full aspect-video relative'>
+    <div
+      ref={containerRef}
+      className={`w-full ${
+        props.fullScreen ? 'h-full' : 'aspect-video'
+      } relative`}
+    >
       <iframe
         ref={iframeRef}
         srcDoc={

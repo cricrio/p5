@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import { CodeFrame } from '@/src/components/CodeFrame';
+import Prose from '@components/Prose.astro';
+
+import { getEntry } from 'astro:content';
+
+import CodeBlock from '@/src/components/CodeBlock.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const data = await getCollection('postSketches');
+
+  return data.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { id } = Astro.params;
+const { entry } = Astro.props;
+const postData = entry;
+const sketchData = await getEntry('sketches', id);
+
+if (!sketchData || !postData) return Astro.redirect('/');
+
+const { Content } = await render(postData);
+---
+
+<Layout title={postData.data.title}>
+  <CodeFrame
+    jsCode={sketchData.data.sketch}
+    canPause={postData.data.animated}
+    fullScreen
+    client:load
+  />
+</Layout>
