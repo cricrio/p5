@@ -5,6 +5,11 @@ import {
   useEffect,
   useCallback,
 } from 'preact/hooks';
+import {
+  IconPlayerPlayFilled,
+  IconPlayerPauseFilled,
+  IconArrowsMaximize,
+} from '@tabler/icons-preact';
 import { cdnLibraryUrl } from '@/src/globals/globals';
 
 interface CodeBundle {
@@ -51,12 +56,13 @@ ${code.css || ''}
 </script>
 `;
 
-export interface CodeFrameProps {
+export type CodeFrameProps = {
   jsCode: string;
   cssCode?: string;
   canPause?: boolean;
+  href?: string;
   fullScreen?: boolean;
-}
+};
 
 /*
  * Component that uses an iframe to run code with the p5 library included.
@@ -177,6 +183,17 @@ export const CodeFrame = (props: CodeFrameProps) => {
         props.fullScreen ? 'h-full' : 'aspect-video'
       } relative`}
     >
+      {props.href && (
+        <a
+          href={props.href}
+          className='absolute top-0 right-0 p-2 text-white mix-blend-difference'
+        >
+          <IconArrowsMaximize />
+          <div className='invisible w-1 h-1 overflow-hidden text-sm'>
+            Maximize
+          </div>
+        </a>
+      )}
       <iframe
         ref={iframeRef}
         srcDoc={
@@ -193,12 +210,26 @@ export const CodeFrame = (props: CodeFrameProps) => {
         className='w-full h-full'
       />
       {props.canPause && (
-        <span
+        <button
           onClick={toggleRunning}
-          className='absolute bottom-0 right-0 p-2 bg-slate-400 rounded-tl-md'
+          className='absolute bottom-0 right-0 p-2 text-white mix-blend-difference'
         >
-          {paused ? 'play' : 'pause'}
-        </span>
+          {paused ? (
+            <>
+              <div className='invisible w-1 h-1 overflow-hidden text-sm'>
+                Play
+              </div>
+              <IconPlayerPlayFilled />
+            </>
+          ) : (
+            <>
+              <div className='invisible w-1 h-1 overflow-hidden text-sm'>
+                Pause
+              </div>
+              <IconPlayerPauseFilled />
+            </>
+          )}
+        </button>
       )}
     </div>
   );

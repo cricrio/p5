@@ -3,9 +3,23 @@ import Layout from '@layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { CodeFrame } from '@components/CodeFrame';
 import Card from '@components/Card.astro';
+import type { MarkdownInstance } from 'astro';
+import Prose from '../components/Prose.astro';
+interface Frontmatter {
+  title: string;
+  description?: string;
+}
 
 const needingAllSketches = Astro.url.searchParams.get('all') === 'true';
 const sketches = await getCollection('sketches');
+const matches = import.meta.glob<MarkdownInstance<Frontmatter>>(
+  '/src/content/plan.mdoc',
+  {
+    eager: true,
+  }
+);
+
+const [plan] = Object.values(matches);
 
 const posts = await getCollection(
   'postSketches',
@@ -27,6 +41,9 @@ const data = posts
 
 <Layout title='Welcome to Astro.'>
   <main class='md:w-9/12 w-full m-auto p-6'>
+    <Prose>
+      <plan.Content />
+    </Prose>
     <section>
       <h2 class='font-bold text-2xl mb-4'>Sketches</h2>
       <div class='grid grid-cols-1 sm:grid-cols-2 gap-8'>
