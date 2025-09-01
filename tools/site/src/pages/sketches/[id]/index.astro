@@ -36,7 +36,7 @@ const { Content } = await render(postData);
         <CodeFrame
           jsCode={sketchData.data.sketch}
           canPause={postData.data.animated}
-          href={`./${id}/fullscreen`}
+          href={`/sketches/${id}/fullscreen`}
           client:load
         />
       </div>
